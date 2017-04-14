@@ -1,57 +1,60 @@
-import java.util.regex.*; 
-import java.io.*;
+import java.util.regex.*;
 import java.lang.String;
-
 
 public class AudioFile {
 
 	private String pathname;
 	private String filename;
-	private static String title;
-	private static String author;
+	private String title;
+	private String author;
 
-
-	public AudioFile(){
+	// default ctor
+	public AudioFile() {
 
 	}
 
-	//Method checks pathname and saves important stuff in class attributes
-	public void parsePathname(String path){
+	// better ctor
+	public AudioFile(String path) {
 
+		parsePathname(path);
+		String filename = getFilename();
+		parseFilename(filename);
 
-		//more than one '/': something with regex following ...	
+	}
+
+	// Method checks pathname and saves important stuff in class attributes
+	public void parsePathname(String path) {
+
+		// more than one '/': something with regex following ...
 
 		regexMultiSlashes(path);
 
-		//don't forget backslashes \\\
+		// don't forget backslashes \\\
 
 		regexBackslashes(path);
 
+		// and hard-drive letters D:, C: ...
 
-		//and hard-drive letters D:, C: ... 
-
-		if(path.charAt(1) == ':'){
+		if (path.charAt(1) == ':') {
 
 			path.replace(path.charAt(1), '/');
 			String slash = "/";
 			path = slash + path;
-			
-			
+
 			int i;
-			for(i=0; i<path.length(); i++){
+			for (i = 0; i < path.length(); i++) {
 
-
-				if(path.charAt(i) == '/'){
+				if (path.charAt(i) == '/') {
 
 					pathname = path;
-					
-					if(path.charAt(path.length())== '/'){
-					filename = "";	
-					}else{
-					filename = path.substring((path.lastIndexOf('/') + 1), path.length());
+
+					if (path.charAt(path.length()) == '/') {
+						filename = "";
+					} else {
+						filename = path.substring((path.lastIndexOf('/') + 1), path.length());
 					}
-					
-				}else if(path.charAt(i) != '/'){
+
+				} else if (path.charAt(i) != '/') {
 					pathname = path;
 					filename = path;
 				}
@@ -59,106 +62,87 @@ public class AudioFile {
 		}
 	}
 
-	//returns path in normal form
-	public String getPathname(){
+	// returns path in normal form
+	public String getPathname() {
 		return pathname;
 	}
 
-	//return filename without path, or empty string
-	public String getFilename(){
+	// return filename without path, or empty string
+	public String getFilename() {
 		return filename;
 	}
 
+	public static void regexMultiSlashes(String origPathname) {
 
-	public static void regexMultiSlashes(String origPathname){
-
-		Pattern replace = Pattern.compile("\\/+");  //Here we put the regex pattern for one or more slashes / // ///
+		Pattern replace = Pattern.compile("\\/+"); // Here we put the regex pattern for one or more slashes / // ///
 		Matcher regexMatcher = replace.matcher(origPathname);
 
-		String regexSlashPathname = regexMatcher.replaceAll("/");       
+		String regexSlashPathname = regexMatcher.replaceAll("/");
 
 	}
 
-	public static void regexBackslashes(String origPathname){
+	public static void regexBackslashes(String origPathname) {
 
-		Pattern replace = Pattern.compile("\\+");  //Here we put the regex pattern for backslashes \\\
+		Pattern replace = Pattern.compile("\\+"); // Here we put the regex pattern for backslashes \\\
 		Matcher regexMatcher = replace.matcher(origPathname);
 
-		String regexBackslashPathname = regexMatcher.replaceAll("/");       
+		String regexBackslashPathname = regexMatcher.replaceAll("/");
 
 	}
 
-	public static void parseFilename(String filename){
+	public void parseFilename(String filename) {
 
-		if(filename == "-"){
+		if (filename == "-") {
 			author = "";
 			title = filename;
-		}else if(regexNAandNT(filename)){
+		} else if (regexNAandNT(filename)) {
 			author = "";
 			title = "";
-		}
-		else if(regexMultipleDashes(filename)){
-			//the match = author; rest = title
-		}
-		else if(regexNA(filename)){
+		} else if (regexNA(filename)) {
 			author = "";
-			title = filename.substring(0, filename.lastIndexOf('.')-1);
+			title = filename.substring(0, filename.lastIndexOf('.'));
+		} else {
+			String[] afterSplit = filename.split(" - ");
+			author = afterSplit[0].trim();
+			title = afterSplit[1];
+			title = title.substring(0, title.lastIndexOf('.')).trim();
 		}
-		
-		else{
-		//deletes all whitespaces after and infront of the text
-		filename.trim();
-		int i;
-		for(i=1; i<filename.length(); i++){
-			if(filename.charAt(i) == '-'){
-				author = filename.substring(0, i-1);
-				author.trim();
-				title = filename.substring(i+1, filename.lastIndexOf('.')-1);   //Example: Author - Title.mp3
-				title.trim();
-			}
-			
-		}
-		if(title.endsWith(".")){
-			title = title.substring(0, title.length()-1);
-		}
-		}
+
 	}
 
-	public static String getAuthor(){
+	public String getAuthor() {
+
 		return author;
 	}
 
-	public static String getTitle(){
+	public String getTitle() {
+
 		return title;
 	}
-	
-	
-	public static void regexNA(String origFilename){
 
-		Pattern replace = Pattern.compile("\\[A-Za-z0-9]\\.+\\[a-z0-9]{2,4}");  //Here we put the regex pattern for audiofile.mp3
-		Matcher regexMatcher = replace.matcher(origFilename);      
+	public static boolean regexNA(String origFilename) {
 
-	}
-	
-	public static void regexNAandNT(String origFilename){
-
-		Pattern replace = Pattern.compile("\\s+\\-+\\s");  //Here we put the regex pattern for >>    -     <<
-		Matcher regexMatcher = replace.matcher(origFilename);      
+		Pattern replace = Pattern.compile("(\\w+|\\s+|\\w-\\w+)+\\.+\\w+"); // Here we put the regex pattern for audiofile.mp3
+		Matcher regexMatcher = replace.matcher(origFilename);
+		return regexMatcher.matches();
 
 	}
-	
-	public static void regexMultipleDashes(String origFilename){
 
-		Pattern replace = Pattern.compile("\\[A-Za-z0-9]+\\[-]+\\[A-Za-z0-9]+\\s\\-\\s");  //Here we put the regex pattern for Linkin-Park - Don't stay
-		Matcher regexMatcher = replace.matcher(origFilename);      
+	public static boolean regexNAandNT(String origFilename) {
 
+		Pattern replace = Pattern.compile("\\s+\\-+\\s"); // Here we put the regex pattern for >> - <<
+		Matcher regexMatcher = replace.matcher(origFilename);
+		return regexMatcher.matches();
 	}
-	
+
+	public String toString() {
+
+		String author = getAuthor();
+		if (author.isEmpty()) {
+			return title;
+		} else {
+			return author + " - " + getTitle();
+		}
+	}
+
 }
-
-
-
-
-
-
-	
