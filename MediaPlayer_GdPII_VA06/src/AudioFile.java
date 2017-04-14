@@ -24,41 +24,30 @@ public class AudioFile {
 
 	// Method checks pathname and saves important stuff in class attributes
 	public void parsePathname(String path) {
-
-		// more than one '/': something with regex following ...
-
-		regexMultiSlashes(path);
-
-		// don't forget backslashes \\\
-
-		regexBackslashes(path);
-
-		// and hard-drive letters D:, C: ...
-
-		if (path.charAt(1) == ':') {
-
-			path.replace(path.charAt(1), '/');
-			String slash = "/";
-			path = slash + path;
-
-			int i;
-			for (i = 0; i < path.length(); i++) {
-
-				if (path.charAt(i) == '/') {
-
-					pathname = path;
-
-					if (path.charAt(path.length()) == '/') {
-						filename = "";
-					} else {
-						filename = path.substring((path.lastIndexOf('/') + 1), path.length());
-					}
-
-				} else if (path.charAt(i) != '/') {
-					pathname = path;
-					filename = path;
-				}
+		if(!path.isEmpty()) {
+			
+			// more than one '/': something with regex following ...
+			path = path.replaceAll("\\/+", "/");
+			
+	
+			// don't forget backslashes \\\
+			path = path.replaceAll("\\\\+", "/");
+		
+	
+			// and hard-drive letters D:, C: 
+			path = regexHardDrive(path);
+	
+	
+			pathname = path;
+	
+			if (path.charAt(path.length() - 1) == '/') {
+				filename = "";
+			} else {
+				filename = path.substring((path.lastIndexOf('/') + 1), path.length());
 			}
+		} else {
+			pathname = "";
+			filename = "";
 		}
 	}
 
@@ -72,42 +61,47 @@ public class AudioFile {
 		return filename;
 	}
 
-	public static void regexMultiSlashes(String origPathname) {
-
-		Pattern replace = Pattern.compile("\\/+"); // Here we put the regex pattern for one or more slashes / // ///
+	
+	public static String regexHardDrive(String origPathname){
+		
+		Pattern replace = Pattern.compile("^([A-Za-z]):");
 		Matcher regexMatcher = replace.matcher(origPathname);
-
-		String regexSlashPathname = regexMatcher.replaceAll("/");
-
-	}
-
-	public static void regexBackslashes(String origPathname) {
-
-		Pattern replace = Pattern.compile("\\+"); // Here we put the regex pattern for backslashes \\\
-		Matcher regexMatcher = replace.matcher(origPathname);
-
-		String regexBackslashPathname = regexMatcher.replaceAll("/");
-
+		String regexHardDrive = origPathname;
+		if(regexMatcher.find()){
+			regexHardDrive = regexMatcher.replaceAll("/" + regexMatcher.group(1));
+		}
+		
+		return regexHardDrive;
+		
 	}
 
 	public void parseFilename(String filename) {
-
-		if (filename == "-") {
-			author = "";
-			title = filename;
-		} else if (regexNAandNT(filename)) {
+		
+		if(!filename.isEmpty() && !filename.equals(" ")) {
+			
+			if (filename == "-") {
+				author = "";
+				title = filename;
+			} else if (regexNAandNT(filename)) {
+				author = "";
+				title = "";
+			} else if (regexNA(filename)) {
+				author = "";
+				title = filename.substring(0, filename.lastIndexOf('.'));
+			} else {
+				String[] afterSplit = filename.split(" - ");
+				if(afterSplit.length > 1) {
+					author = afterSplit[0].trim();
+					title = afterSplit[1].trim();
+					if(!title.isEmpty()) {
+						title = title.substring(0, title.lastIndexOf('.')).trim();
+					}
+				}
+			}
+		} else {
 			author = "";
 			title = "";
-		} else if (regexNA(filename)) {
-			author = "";
-			title = filename.substring(0, filename.lastIndexOf('.'));
-		} else {
-			String[] afterSplit = filename.split(" - ");
-			author = afterSplit[0].trim();
-			title = afterSplit[1];
-			title = title.substring(0, title.lastIndexOf('.')).trim();
 		}
-
 	}
 
 	public String getAuthor() {
@@ -122,7 +116,7 @@ public class AudioFile {
 
 	public static boolean regexNA(String origFilename) {
 
-		Pattern replace = Pattern.compile("(\\w+|\\s+|\\w-\\w+)+\\.+\\w+"); // Here we put the regex pattern for audiofile.mp3
+		Pattern replace = Pattern.compile("(\\w+|\\s+|\\w-\\w+)?\\.+\\w+"); // Here we put the regex pattern for audiofile.mp3
 		Matcher regexMatcher = replace.matcher(origFilename);
 		return regexMatcher.matches();
 

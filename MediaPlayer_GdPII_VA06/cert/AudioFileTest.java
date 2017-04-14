@@ -246,6 +246,7 @@ public class AudioFileTest extends TestCase {
                         + " nicht korrekt", toStrings[i], af.toString());
             }
         } catch (Exception e) {
+        	
             fail("Fehler fuer pathname:" + current + ":" + e);
         }
     }
