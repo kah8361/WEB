@@ -1,7 +1,9 @@
 import java.util.regex.*;
 import java.lang.String;
+import java.io.File;
 
-public class AudioFile {
+
+public abstract class AudioFile {
 
 	private String pathname;
 	private String filename;
@@ -17,6 +19,13 @@ public class AudioFile {
 	public AudioFile(String path) {
 
 		parsePathname(path);
+		String pathname = getPathname();
+		File validFile = new File(pathname);
+		
+		if(!validFile.canRead()){
+			throw new RuntimeException("No file to read at this path: " + pathname);
+		}
+		
 		String filename = getFilename();
 		parseFilename(filename);
 
@@ -139,4 +148,10 @@ public class AudioFile {
 		}
 	}
 
+	public abstract void play();
+	public abstract void togglePause();
+	public abstract void stop();
+	public abstract String getFormattedDuration();
+	public abstract String getFormattedPosition();
+	
 }
