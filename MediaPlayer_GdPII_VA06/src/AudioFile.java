@@ -7,8 +7,8 @@ public abstract class AudioFile {
 
 	private String pathname;
 	private String filename;
-	private String title;
-	private String author;
+	protected String title;
+	protected String author;
 
 	// default ctor
 	public AudioFile() {
