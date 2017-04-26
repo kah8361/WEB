@@ -1,4 +1,3 @@
-import studiplayer.basic.BasicPlayer;
 import studiplayer.basic.TagReader;
 import java.util.Map;
 
@@ -14,7 +13,7 @@ public class TaggedFile extends SampledFile {
 	
 	public TaggedFile(String path){
 		super(path);
-		String pathname = super.getPathname();
+		String pathname = getPathname();
 		readAndStoreTags(pathname);
 	}
 	
@@ -25,7 +24,7 @@ public class TaggedFile extends SampledFile {
 
 	public String toString(){
 		
-		if(album != ""){
+		if(album != null && !album.isEmpty()){
 			return super.toString() + " - " + album + " - " + getFormattedDuration();
 		}else{
 			return super.toString() + " - " + getFormattedDuration();
@@ -39,22 +38,22 @@ public class TaggedFile extends SampledFile {
 	
 	public void readAndStoreTags(String pathname){
 		
-		 Map <String,Object> tagMap = studiplayer.basic.TagReader.readTags(pathname);
+		 Map <String,Object> tagMap = TagReader.readTags(pathname);
 		 for(String key : tagMap.keySet()){
 			 if(tagMap.get(key) != null  && tagMap.get(key) != ""){
-				 if(tagMap.get(key)=="author"){
-					 AudioFile.author = (String)tagMap.get(key);
+				 if(key == "author"){
+					 author = tagMap.get(key).toString().trim();
 					 continue;
 				 }
-				 else if(tagMap.get(key)=="title"){
-					 AudioFile.title = (String)tagMap.get(key);
+				 else if(key=="title"){
+					 title = tagMap.get(key).toString().trim();
 					 continue;
 				 }
-				 else if(tagMap.get(key)=="album"){
-					 album = (String)tagMap.get(key);
+				 else if(key=="album"){
+					 album = tagMap.get(key).toString().trim();
 					 continue;
 				 }
-				 else if(tagMap.get(key)=="duration"){
+				 else if(key=="duration"){
 					 duration = (long)tagMap.get(key);
 					 continue;
 				 }

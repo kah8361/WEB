@@ -38,30 +38,36 @@ public abstract class SampledFile extends AudioFile {
 	//returns time in format mm:ss
 		public static String timeFormatter(long microtime){
 			
+			if(microtime<0){
+				//time is < 0
+				throw new RuntimeException("Negative time value provided.");
+			}else{
 			//time in seconds
 			microtime = microtime/(1000000);
 			
-			if(microtime >= 0){
 				//possible time 59:59
 				if(microtime > 5999){
-					throw new RuntimeException("Time wavlue exceeds allowed format.");
+					throw new RuntimeException("Time value exceeds allowed format.");
 				}else{
 					
 					//time in minutes
 					int min = (int)(microtime/60);
 					
 					//minutes from comma * 60 are the seconds example: 126,6 Minuten --> 0,6 * 60 = 36 sec
-					int sec = (int)((((microtime/60)*100)%100)*0.6);
+					int sec = (int)(microtime%60);
 					
 					if(min < 10){
-						return "0" + min + ":" + sec;
+						if(sec < 10){
+							return "0" + min + ":" + "0" + sec;
+						}else{
+							return "0" + min + ":" + sec;
+						}
+					}else if(sec < 10){
+						return min + ":" + "0" + sec;
 					}else{
-					return min + ":" + sec;
+						return min + ":" + sec;
 					}
 				}
-			}else{
-				//time is < 0
-				throw new RuntimeException("Negative time value provided.");
-			}	
+			}
 		}
 }

@@ -14,7 +14,7 @@ public class WavFile extends SampledFile{
 	
 	public static long computeDuration(long numberOfFrames, float frameRate){
 		
-		long timeMS = (long)(numberOfFrames * frameRate);
+		long timeMS = (long)((numberOfFrames / frameRate)*1000000);
 		return timeMS;
 	}
 
@@ -30,7 +30,7 @@ public class WavFile extends SampledFile{
 	
 	public String toString(){
 		
-		return toString() + " - " + getFormattedDuration();
+		return super.toString() + " - " + getFormattedDuration();
 		
 	}
 	

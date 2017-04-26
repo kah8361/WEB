@@ -1,12 +1,14 @@
 import java.util.regex.*;
 import java.lang.String;
+import java.io.File;
 
-public class AudioFile {
+
+public abstract class AudioFile {
 
 	private String pathname;
 	private String filename;
-	private String title;
-	private String author;
+	protected String title;
+	protected String author;
 
 	// default ctor
 	public AudioFile() {
@@ -17,6 +19,13 @@ public class AudioFile {
 	public AudioFile(String path) {
 
 		parsePathname(path);
+		String pathname = getPathname();
+		File validFile = new File(pathname);
+		
+		if(!validFile.canRead()){
+			throw new RuntimeException("No file to read at this path: " + pathname);
+		}
+		
 		String filename = getFilename();
 		parseFilename(filename);
 
@@ -116,7 +125,7 @@ public class AudioFile {
 
 	public static boolean regexNA(String origFilename) {
 
-		Pattern replace = Pattern.compile("(\\w+|\\s+|\\w-\\w+)?\\.+\\w+"); // Here we put the regex pattern for audiofile.mp3
+		Pattern replace = Pattern.compile("(\\w+|\\s+|\\w-\\w+|\\.)+\\.+\\w+"); // Here we put the regex pattern for audiofile.mp3
 		Matcher regexMatcher = replace.matcher(origFilename);
 		return regexMatcher.matches();
 
@@ -132,11 +141,18 @@ public class AudioFile {
 	public String toString() {
 
 		String author = getAuthor();
-		if (author.isEmpty()) {
-			return title;
-		} else {
+		if (author != null && !author.isEmpty()) {
 			return author + " - " + getTitle();
+		} else {
+			return getTitle();
 		}
 	}
 
+	public abstract void play();
+	public abstract void togglePause();
+	public abstract void stop();
+	public abstract String getFormattedDuration();
+	public abstract String getFormattedPosition();
+	public abstract String[] fields();
+	
 }
