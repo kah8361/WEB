@@ -153,5 +153,6 @@ public abstract class AudioFile {
 	public abstract void stop();
 	public abstract String getFormattedDuration();
 	public abstract String getFormattedPosition();
+	public abstract String[] fields();
 	
 }

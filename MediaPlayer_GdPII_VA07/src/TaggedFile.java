@@ -32,6 +32,11 @@ public class TaggedFile extends SampledFile {
 		}
 	}
 	
+	public String[] fields(){
+		String[] field = {getAuthor(), getTitle(), album, getFormattedDuration()};
+		return field;
+	}
+	
 	public void readAndStoreTags(String pathname){
 		
 		 Map <String,Object> tagMap = studiplayer.basic.TagReader.readTags(pathname);

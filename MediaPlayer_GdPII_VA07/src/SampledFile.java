@@ -3,6 +3,8 @@ import studiplayer.basic.BasicPlayer;
 public abstract class SampledFile extends AudioFile {
 
 	protected long duration;
+	protected long numberOfFrames;
+	protected float frameRate;
 	
 	public SampledFile(){
 		super();
