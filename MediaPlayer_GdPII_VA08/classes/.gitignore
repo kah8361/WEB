@@ -11,3 +11,7 @@
 /WavFileTest.class
 /PlayList.class
 /UTestPlayList2.class
+/AudioFileFactoryTest.class
+/PlayListTest.class
+/AudioFileFactory.class
+/UTestAudioFileFactory.class

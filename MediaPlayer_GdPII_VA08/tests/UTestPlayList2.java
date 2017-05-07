@@ -12,7 +12,7 @@ public class UTestPlayList2{
 	@Test
 	public void test_getCurrentAudioFile_02() throws Exception{
 		PlayList pl = new PlayList();
-		TaggedFile tf0 = new TaggedFile("audiofile/Eisbach Deep Snow.ogg");
+		TaggedFile tf0 = new TaggedFile("audiofiles/Eisbach Deep Snow.ogg");
 		pl.add(tf0);
 		pl.setCurrent(10);
 		assertEquals("Wrong current AudioFile", null, pl.getCurrentAudioFile());
@@ -38,7 +38,7 @@ public class UTestPlayList2{
 		TaggedFile f0 = new TaggedFile("audiofiles/Eisbach Deep Snow.ogg");
 		TaggedFile f1 = new TaggedFile("audiofiles/tanom p2 journey.mp3");
 		TaggedFile f2 = new TaggedFile("audiofiles/Rock 812.mp3");
-		WavFile f4 = new WavFile("audiofules/wellenmeister - tranquility.wav");
+		WavFile f4 = new WavFile("audiofiles/wellenmeister - tranquility.wav");
 		pl.add(f0);
 		pl.add(f1);
 		pl.add(f2);
@@ -53,5 +53,15 @@ public class UTestPlayList2{
 				System.out.println("");
 			}
 		}
+	}
+	
+	@Test
+	public void test_saveAsM3UTest() throws Exception{
+		PlayList pl = new PlayList();
+		TaggedFile f0 = new TaggedFile("audiofiles/Eisbach Deep Snow.ogg");
+		TaggedFile f1 = new TaggedFile("audiofiles/tanom p2 journey.mp3");
+		pl.add(f0);
+		pl.add(f1);
+		pl.saveAsM3U("Datei.txt");
 	}
 }
