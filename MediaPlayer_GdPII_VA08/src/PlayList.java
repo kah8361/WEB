@@ -1,8 +1,12 @@
-import java.util.*;
-import java.util.Collections;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.*;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 
 @SuppressWarnings("serial") 
@@ -18,6 +22,11 @@ public class PlayList extends LinkedList<AudioFile> {
 	public PlayList(boolean order){
 		curPosition = getCurrent();
 		setRandomOrder(order);
+	}
+	
+	public PlayList(String pathname){
+		super();
+		loadFromM3U(pathname);
 	}
 	
 	public void setCurrent(int position){
@@ -95,6 +104,36 @@ public class PlayList extends LinkedList<AudioFile> {
 	
 	public void loadFromM3U(String pathname){
 		
-	}
+		Scanner scanner = null;
+		
+		try{
+			scanner = new Scanner(new File(pathname));
+
+			while(scanner.hasNextLine()){
+				
+				//clear PlayList 
+				this.clear();
+				
+				//ignore empty lines and comments
+				scanner.skip(Pattern.compile("\\^#.*\n$"));       //Line looks like this: #comment starts with "#" and ends with newline
+				scanner.skip(Pattern.compile("\\s+"));
+
+				scanner.nextLine();
+				
+				//add a Tagged or WavFile to PlayList
+				this.add(AudioFileFactory.getInstance(pathname));
+				
+			}
+		}catch(IOException e){
+			throw new RuntimeException(e);
+		}finally{
+			try{
+				scanner.close();
+			}catch(Exception e){
+				throw new RuntimeException(e);
+			}
+				
+		}
 	
+	}
 }
