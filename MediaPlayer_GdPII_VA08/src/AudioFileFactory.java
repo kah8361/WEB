@@ -8,20 +8,17 @@ public class AudioFileFactory {
 	}
 
 	public static AudioFile getInstance(String pathname){
-		
-		try{
-			Matcher mp3 = Pattern.compile("\\(?i).mp3$").matcher(pathname);
-			Matcher ogg = Pattern.compile("\\(?i).ogg$").matcher(pathname);
-			Matcher wav = Pattern.compile("\\(?i).wav$").matcher(pathname);
+
+			Matcher mp3 = Pattern.compile("(?i).mp3$").matcher(pathname);
+			Matcher ogg = Pattern.compile("(?i).ogg$").matcher(pathname);
+			Matcher wav = Pattern.compile("(?i).wav$").matcher(pathname);
 			
-			if(mp3.matches() || ogg.matches()){
+			if(mp3.find() || ogg.find()){
 				return new TaggedFile(pathname);
-			}else if(wav.matches()){
+			}else if(wav.find()){
 				return new WavFile(pathname);
-			}
-		}catch (Exception e){
+			}else{
 			throw new RuntimeException("Unknow suffix for AudioFile: \""+ pathname + "\"");
 		}
-	}
-	
+	}	
 }

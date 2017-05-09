@@ -1,5 +1,5 @@
+import static org.junit.Assert.*;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 public class UTestAudioFileFactory {
 
@@ -10,7 +10,7 @@ public class UTestAudioFileFactory {
 			AudioFileFactory.getInstance("unknown.xxx");
 			fail("Unknown suffix; expecting exeption");
 		}catch (RuntimeException e){
-			throw new RuntimeException("Unknown suffix:" + e.getMessage());
+			
 		}
 	}
 	
@@ -20,7 +20,7 @@ public class UTestAudioFileFactory {
 			AudioFileFactory.getInstance("nonexistent.mp3");
 			fail("File is not readable; expecting exception");
 		}catch (RuntimeException e){
-			throw new RuntimeException("No readable file:" + e.getMessage());
+			
 		}
 	}
 	
