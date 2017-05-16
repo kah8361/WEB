@@ -27,6 +27,10 @@ public abstract class SampledFile extends AudioFile {
 		BasicPlayer.togglePause();
 	}
 	
+	public long getDuration(){
+		return duration;
+	}
+	
 	public void stop(){
 		BasicPlayer.stop();
 	}

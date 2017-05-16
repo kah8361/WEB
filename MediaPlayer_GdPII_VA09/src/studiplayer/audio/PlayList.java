@@ -144,4 +144,23 @@ public class PlayList extends LinkedList<AudioFile> {
 		}
 
 	}
+	
+	public void sort(SortCriterion order){
+		
+		switch(order){
+			case AUTHOR:
+				Collections.sort(this, new AuthorComparator());
+				break;
+			default:
+				Collections.sort(this, new TitleComparator());
+				break;
+			case ALBUM:
+				Collections.sort(this, new AlbumComparator());
+				break;
+			case DURATION:
+				Collections.sort(this, new DurationComparator());
+				break;
+ 		}
+		
+	}
 }
