@@ -24,12 +24,14 @@ public class Player extends JFrame implements ActionListener {
 	public String songDescriptionS;
 	public String playTimeS;
 	private String actionCMD;
+	private PlayListEditor playListEditor;
 
 	private JButton bplay = new JButton(new ImageIcon("icons/play.png"));
 	private JButton bpause = new JButton(new ImageIcon("icons/pause.png"));
 	private JButton bstop = new JButton(new ImageIcon("icons/stop.png"));
 
-	private boolean stopped;
+	private volatile boolean stopped;
+	private boolean editorVisible;
 
 	public static String DEFAULT_PLAYLIST = "playlists/DefaultPlayList.m3u";
 
@@ -75,6 +77,10 @@ public class Player extends JFrame implements ActionListener {
 		add(panel, BorderLayout.CENTER);
 
 		setTitle(windowTitle);
+		
+		PlayList playList = new PlayList();
+		playListEditor = new PlayListEditor(this, playList);
+		editorVisible = false;
 
 		// Acitvate GUI
 		this.pack();
@@ -135,14 +141,16 @@ public class Player extends JFrame implements ActionListener {
 					System.out.println("NotPlayableException after clicking PauseButton again" + e.toString());
 				}
 			} else {
-				af.togglePause();
+				if(!playList.isEmpty()){
+					af.togglePause();
+				}
 			}
 
 		} else if (cmd.equals("AC_STOP")) {
-			stopCurrentSong();
 			bplay.setEnabled(true);
 			bstop.setEnabled(false);
 			bpause.setEnabled(false);
+			stopCurrentSong();
 
 		} else if (cmd.equals("AC_NEXT")) {
 			actionCMD = "AC_NEXT";
@@ -167,7 +175,12 @@ public class Player extends JFrame implements ActionListener {
 			}
 
 		} else if (cmd.equals("AC_PLEDITOR")) {
-			// TODO
+			if(editorVisible){
+				editorVisible = false;
+			}else {
+				editorVisible = true;
+			}
+			playListEditor.setVisible(editorVisible);
 		}
 	}
 
@@ -202,6 +215,14 @@ public class Player extends JFrame implements ActionListener {
 		System.out.println("Current index is " + playList.getCurrent());
 
 		updateSongInfo(af);
+		
+		if(!playList.isEmpty()){
+			if (af != null) {
+				// Start threads
+				(new TimerThread()).start();
+				(new PlayerThread()).start();
+				}
+		}
 		try {
 			af.play();
 		} catch (NotPlayableException e) {
@@ -220,8 +241,11 @@ public class Player extends JFrame implements ActionListener {
 		System.out.println("Filename is " + af.getFilename());
 		System.out.println("Current index is " + playList.getCurrent());
 
-		af.stop();
-		stopped = true;
+		if(!playList.isEmpty()){
+			af.stop();
+			stopped = true;
+		}
+		
 		updateSongInfo(af);
 
 	}
@@ -255,6 +279,7 @@ public class Player extends JFrame implements ActionListener {
 				}
 			}
 		}
+	}
 
 		private class PlayerThread extends Thread {
 
@@ -278,4 +303,4 @@ public class Player extends JFrame implements ActionListener {
 		}
 
 	}
-}
+
