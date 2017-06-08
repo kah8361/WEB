@@ -44,9 +44,6 @@ public class Player extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 
-		// Create GUI components
-		songDescription = new JLabel(songDescriptionS);
-		playTime = new JLabel(playTimeS);
 		JPanel panel = new JPanel();
 
 		bplay.setActionCommand("AC_PLAY");
@@ -72,11 +69,6 @@ public class Player extends JFrame implements ActionListener {
 		panel.add(bstop);
 		panel.add(bplaylistEditor);
 
-		add(songDescription, BorderLayout.NORTH);
-		add(playTime, BorderLayout.WEST);
-		add(panel, BorderLayout.CENTER);
-
-		setTitle(windowTitle);
 		
 		PlayList playList = new PlayList();
 		playListEditor = new PlayListEditor(this, playList);
@@ -102,6 +94,16 @@ public class Player extends JFrame implements ActionListener {
 			songDescriptionS = playlist.getCurrentAudioFile().toString();
 			playTimeS = "00:00";
 		}
+		
+		songDescription = new JLabel(songDescriptionS);
+		playTime = new JLabel(playTimeS);
+		
+		this.add(songDescription, BorderLayout.NORTH);
+		this.add(playTime, BorderLayout.WEST);
+		this.add(panel, BorderLayout.CENTER);
+
+		setTitle(windowTitle);
+		
 	}
 
 	public void actionPerformed(ActionEvent ae) {
