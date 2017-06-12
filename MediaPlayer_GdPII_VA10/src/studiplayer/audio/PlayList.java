@@ -51,7 +51,7 @@ public class PlayList extends LinkedList<AudioFile> {
 
 	public void changeCurrent() {
 
-		if (this.get(curPosition) == this.getLast() || getCurrentAudioFile() == null) {
+		if (curPosition == (this.size() -1) || getCurrentAudioFile() == null) {
 			curPosition = 0;
 			if (randomOrder == true) {
 				Collections.shuffle(this);

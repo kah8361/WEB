@@ -21,9 +21,8 @@ public class Player extends JFrame implements ActionListener {
 	private JLabel songDescription;
 	private JLabel playTime;
 	private String windowTitle;
-	public String songDescriptionS;
-	public String playTimeS;
-	private String actionCMD;
+	private String songDescriptionS;
+	private String playTimeS;
 	private PlayListEditor playListEditor;
 
 	private JButton bplay = new JButton(new ImageIcon("icons/play.png"));
@@ -32,10 +31,12 @@ public class Player extends JFrame implements ActionListener {
 
 	private volatile boolean stopped;
 	private boolean editorVisible;
+	
+	private PlayList playList;
 
-	public static String DEFAULT_PLAYLIST = "playlists/DefaultPlayList.m3u";
+	public static final String DEFAULT_PLAYLIST = "playlists/DefaultPlayList.m3u";
 
-	public Player(PlayList playlist) {
+	public Player(PlayList playList) {
 		// Initialize the main frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		try {
@@ -69,8 +70,7 @@ public class Player extends JFrame implements ActionListener {
 		panel.add(bstop);
 		panel.add(bplaylistEditor);
 
-		
-		PlayList playList = new PlayList();
+		this.playList = playList;
 		playListEditor = new PlayListEditor(this, playList);
 		editorVisible = false;
 
@@ -85,13 +85,13 @@ public class Player extends JFrame implements ActionListener {
 		bnextTitel.setEnabled(true);
 		bplaylistEditor.setEnabled(true);
 
-		if (playlist.isEmpty()) {
+		if (playList.isEmpty()) {
 			windowTitle = "Studiplayer: empty playlist";
 			songDescriptionS = "no current Title";
 			playTimeS = "--:--";
 		} else {
-			windowTitle = "Current song: " + playlist.getCurrentAudioFile().toString();
-			songDescriptionS = playlist.getCurrentAudioFile().toString();
+			windowTitle = "Current song: " + playList.getCurrentAudioFile().toString();
+			songDescriptionS = playList.getCurrentAudioFile().toString();
 			playTimeS = "00:00";
 		}
 		
@@ -108,7 +108,6 @@ public class Player extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent ae) {
 		AudioFile af;
-		PlayList playList = new PlayList();
 		String cmd = ae.getActionCommand();
 
 		if (cmd.equals("AC_PLAY")) {
@@ -118,7 +117,6 @@ public class Player extends JFrame implements ActionListener {
 			playCurrentSong();
 
 		} else if (cmd.equals("AC_PAUSE")) {
-			actionCMD = "AC_PAUSE";
 			bpause.setEnabled(true);
 			bstop.setEnabled(true);
 			bplay.setEnabled(false);
@@ -132,21 +130,12 @@ public class Player extends JFrame implements ActionListener {
 				songDescriptionS = "no current song";
 				playTimeS = "--:--";
 			} else {
+				af.togglePause();
 				songDescriptionS = af.getTitle();
 				windowTitle = af.getTitle();
 				playTimeS = af.getFormattedPosition();
 			}
-			if (getLastAC() == "AC_PAUSE") {
-				try {
-					af.play();
-				} catch (NotPlayableException e) {
-					System.out.println("NotPlayableException after clicking PauseButton again" + e.toString());
-				}
-			} else {
-				if(!playList.isEmpty()){
-					af.togglePause();
-				}
-			}
+			
 
 		} else if (cmd.equals("AC_STOP")) {
 			bplay.setEnabled(true);
@@ -155,7 +144,6 @@ public class Player extends JFrame implements ActionListener {
 			stopCurrentSong();
 
 		} else if (cmd.equals("AC_NEXT")) {
-			actionCMD = "AC_NEXT";
 			System.out.println("Switching to next audio file ");
 			bplay.setEnabled(false);
 			bpause.setEnabled(true);
@@ -186,30 +174,30 @@ public class Player extends JFrame implements ActionListener {
 		}
 	}
 
-	public String getLastAC() {
-		return actionCMD;
-	}
 
 	private void updateSongInfo(AudioFile af) {
 
-		PlayList playList = new PlayList();
 		if (af == null || playList.isEmpty()) {
 			windowTitle = "no current song";
+			setTitle(windowTitle);
 			songDescriptionS = "no current song";
+			songDescription.setText(songDescriptionS);
 			playTimeS = "--:--";
+			playTime.setText(playTimeS);
 		} else {
 			songDescriptionS = af.getTitle();
+			songDescription.setText(songDescriptionS);
 			windowTitle = af.getTitle();
+			setTitle(windowTitle);
 			playTimeS = "00:00";
+			playTime.setText(playTimeS);
 		}
 	}
 
 	private void playCurrentSong() { 
 
-		PlayList playList = new PlayList();
 		AudioFile af;
 
-		actionCMD = "AC_PLAY";
 		stopped = false;
 		af = playList.getCurrentAudioFile();
 		System.out.println("Playing " + af.toString());
@@ -225,51 +213,43 @@ public class Player extends JFrame implements ActionListener {
 				(new PlayerThread()).start();
 				}
 		}
-		try {
-			af.play();
-		} catch (NotPlayableException e) {
-			System.out.println("NotPlayableException after clicking PlayButton" + e.toString());
-		}
 	}
 
 	private void stopCurrentSong() {
 
-		PlayList playList = new PlayList();
 		AudioFile af;
 
-		actionCMD = "AC_STOP";
 		af = playList.getCurrentAudioFile();
 		System.out.println("Stoping " + af.toString());
 		System.out.println("Filename is " + af.getFilename());
 		System.out.println("Current index is " + playList.getCurrent());
 
 		if(!playList.isEmpty()){
-			af.stop();
 			stopped = true;
+			af.stop();
 		}
-		
+
 		updateSongInfo(af);
 
 	}
 
 	public static void main(String[] args) {
 
-		PlayList playlist = new PlayList();
+		PlayList playList = new PlayList();
 
 		if (args.length == 2) {
-			playlist.loadFromM3U(args[1]);
+			playList.loadFromM3U(args[1]);
 		} else {
-			playlist.loadFromM3U(DEFAULT_PLAYLIST);
+			playList.loadFromM3U(DEFAULT_PLAYLIST);
 		}
 
-		new Player(playlist);
+		new Player(playList);
 	}
 
 	private class TimerThread extends Thread {
 
 		public void run() {
-
-			PlayList playList = new PlayList();
+			
 			AudioFile af;
 			af = playList.getCurrentAudioFile();
 			while (stopped == false && !playList.isEmpty()) {
@@ -286,21 +266,23 @@ public class Player extends JFrame implements ActionListener {
 		private class PlayerThread extends Thread {
 
 			public void run() {
-
-				PlayList playList = new PlayList();
+				
 				AudioFile af;
 				af = playList.getCurrentAudioFile();
 				while (stopped == false && !playList.isEmpty()) {
 					try{
-						af.play();
+					af.play();
 					}catch(NotPlayableException e){
 						System.out.println("Not PlayableException: " + e + getStackTrace());
 					}
-				}
-				if(stopped == false){
+					if(stopped == false){
 					playList.changeCurrent();
+
+					}
+
 					updateSongInfo(af);
 				}
+				
 			}
 		}
 
