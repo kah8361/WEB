@@ -1,6 +1,9 @@
+body{
+    background-color: rgb(238, 238, 146);
+}
+
 .form-style-2{
     font: 13px Arial, Helvetica, sans-serif;
-    background-color: 55px solid #FFF476;
 }
 .form-style-2-heading{
     font-weight: bold;
@@ -10,14 +13,8 @@
     font-size: 15px;
     padding-bottom: 3px;
 }
-.form-style-2 label{
-    display: block;
-    margin: 5px 5px 5px 5px;
-}
 
-.form-style-2 input.input-field{
-    width: 48%;
-}
+
 
 .form-style-2 input.input-field,
 .form-style-2 button{
@@ -31,11 +28,21 @@
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    align-items: center;
+
+}
+.field-long{
+    float: right;
+}
+.button{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .fieldset{
-    margin: 0;
+    border: 1px solid grey;
+    width: 400px;
+    margin:auto;
     background-color: lightgrey;
     border-radius: 8px;
     padding: 20px;  
