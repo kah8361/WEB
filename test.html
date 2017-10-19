@@ -9,21 +9,31 @@
 <body>
 
     <form class="form-style-2">
-
-        <fieldset>
+        
+        <fieldset class = "fieldset">
             <legend>Neue Adresse anlegen</legend>
-            <div class="form-style-1">
-                Name: <input type="text" name="field1" class="field-long" /><br> 
-                Email: <input type="email" name="field2" class="field-long" /><br> 
-                Postleitzahl: <input type="number" name="field3" class="field-long" /><br> 
-                Ort:<input type="text" name="field4" class="field-long" /><br> 
-                Strasse und Hausnummer: <input type="text" name="field5" class="field-long" /><br>
+            <div class="text">
+                <label for: name>Name:</label> 
+                <input type="text" name="field1" class="field-long" /> 
+                <label for: email>Email:</label> 
+                <input type="email" name="field2" class="field-long" />
+                <label>Postleitzahl:</label> 
+                <input type="number" name="field3" class="field-long" />
+                <label for: place>Ort:</label> 
+                <input type="text" name="field4" class="field-long" />
+                <label>Strasse und Hausnummer:</label> 
+                <input type="text" name="field5" class="field-long" /><br>
+                
+                
+            </div>
+
+            
+        <button type="button">abbrechen</button>
+        <button type="button">speichern</button>
 
         </fieldset>
 
-        <button type="button">abbrechen</button>
-        <button type="button">speichern</button>
-        </div>
+        
     </form>
 
 </body>

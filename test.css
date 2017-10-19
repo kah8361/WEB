@@ -1,11 +1,6 @@
-
 .form-style-2{
     font: 13px Arial, Helvetica, sans-serif;
-    background-color: lightgrey;
-    
-    border: 55px solid #FFF476;
-    padding: 25px;
-    margin: 25px;
+    background-color: 55px solid #FFF476;
 }
 .form-style-2-heading{
     font-weight: bold;
@@ -25,7 +20,6 @@
 }
 
 .form-style-2 input.input-field,
-
 .form-style-2 button{
     border: none;
     padding: 8px 15px 8px 15px;
@@ -37,7 +31,22 @@
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
+    align-items: center;
 }
+
+.fieldset{
+    margin: 0;
+    background-color: lightgrey;
+    border-radius: 8px;
+    padding: 20px;  
+}
+
+.text{
+    font-weight: bold;
+    column-gap: 20px;
+}
+
+
 .form-style-2 button:hover{
     background: #EA7B00;
     color: #fff;
