@@ -64,10 +64,25 @@ function belegeZeile(table, adresse) {
    	
 	td  = tr.insertCell(1);
    	inhalt = document.createTextNode(adresse.name);
-   	td.appendChild(inhalt);
+	td.appendChild(inhalt);
+	   
+	td  = tr.insertCell(2);
+	inhalt = document.createTextNode(adresse.email);
+	td.appendChild(inhalt)
 
+	td  = tr.insertCell(3);
+	inhalt = document.createTextNode(adresse.ort);
+	td.appendChild(inhalt);
+
+	td  = tr.insertCell(4);
+	inhalt = document.createTextNode(adresse.plz);
+	td.appendChild(inhalt);
+
+	td  = tr.insertCell(5);
+	inhalt = document.createTextNode(adresse.strasse);
+	td.appendChild(inhalt);
 	// *** (5) ***
-
+ 
 	// edit button
 	var button = document.createElement('button');
 	button.onclick = function() {
@@ -79,8 +94,19 @@ function belegeZeile(table, adresse) {
 	image.height = "15";
 	button.appendChild(image);
 	td.appendChild(button);
-	// delete button
 
+
+	// delete button
+	var button = document.createElement('button');
+	button.onclick = function() {
+		loescheAdresse(this);
+	};
+	var image = document.createElement('img');
+	image.src = "images/trashIcon.jpg";
+	image.width = "15";
+	image.height = "15";
+	button.appendChild(image);
+	td.appendChild(button);
 	// *** (6) ***
 
 }
@@ -104,7 +130,6 @@ function belegeAdressenTabelle() {
 		}
 	} catch (error) {
 		console.log(error);
-		alert(error);
 	}
 }
 

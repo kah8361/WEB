@@ -56,8 +56,44 @@ class AdresseDTO  {
 	 * meldung ausgegeben werden.
 	 */
 	pruefe() {
-		// *** (1) ***
-    }
+		{
+			var input;
+			try {
+				console.log("prüfe");
+
+				input = document.getElementById("nameID").value;
+				if(input == ""){
+					alert("Please enter a name!")
+				}
+				input = document.getElementById("emailID").value;
+				if(input == ""){
+					alert("Please enter an email!")
+				}
+				input = document.getElementById("ortID").value;
+				if(input == ""){
+					alert("Please enter a place!")
+				}
+				input = document.getElementById("plzID").value;
+				if(input == ""){
+					alert("Please enter a plz!")
+				}
+				input = document.getElementById("strasseID").value;
+				if(input == ""){
+					alert("Please enter a street!")
+				}
+
+				validateEmail(this._email);
+				
+				if(this._plz < 1){
+					alert("Your PLZ is incorrect!");
+				}
+
+			} catch (error) {
+				console.log(error);
+			}
+		
+	}
+}
 
 	/**
 	 * Liefert true, falls 'email' eine korrekte E-Mail-Adresse enthält.

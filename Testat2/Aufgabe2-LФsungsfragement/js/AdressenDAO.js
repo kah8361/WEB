@@ -137,6 +137,9 @@ class AdressenDAO {
 	 * Es wird nur "logisch" gelöscht, indem die id auf den Wert -1 gesetzt wird.
 	 */
 	loescheAdresse(id) {
+
+		id = -1;
+		aktualisiereAdresse(......);
 		// *** (4) ***
 	}
 
@@ -159,7 +162,7 @@ class AdressenDAO {
 					}
 
 				} catch (error) {
-					alert(error);
+					console.log(error);
 				}
 			}
 		} else {
