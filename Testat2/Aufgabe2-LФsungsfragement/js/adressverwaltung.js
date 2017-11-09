@@ -81,6 +81,8 @@ function belegeZeile(table, adresse) {
 	td  = tr.insertCell(5);
 	inhalt = document.createTextNode(adresse.strasse);
 	td.appendChild(inhalt);
+
+	td = tr.insertCell(6);
 	// *** (5) ***
  
 	// edit button

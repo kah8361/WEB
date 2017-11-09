@@ -56,7 +56,7 @@ class AdresseDTO  {
 	 * meldung ausgegeben werden.
 	 */
 	pruefe() {
-		{
+		
 			var input;
 			try {
 				console.log("prüfe");
@@ -92,7 +92,7 @@ class AdresseDTO  {
 				console.log(error);
 			}
 		
-	}
+	
 }
 
 	/**

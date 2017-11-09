@@ -51,16 +51,64 @@ class AdressenDAO {
 	 * 		(der Namensfilter wird nicht evaluiert, 'I'' ist nicht Präfix von 'ngolstadt'')
 	 */
 	filter(adresse, name, ort) {
+		var namelen = document.getElementById("nameID").value.length;
+		var ortlen = document.getElementById("ortID").value.length;
+		var nameid = document.getElementById("nameID").value;
+		var ortid = document.getElementById("ortID").value;
+		if((nameid === adresse.name.substring(0, namelen) || nameid === "") && (ortid === adresse.ort.substring(0, ortlen) || ortid === ""))
+		{
+			return true;
+		}
+		
 		// *** (2) ***
 	};	
-	
+	 
 	/**
 	 * Gibt das übergebene AdresseDTO-Array 'liste'' sortiert nach 'sortierung' (= string-Wert 
 	 * Name, Ort oder PLZ) zurück. Abhängig vom Wert von 'sortierung' wird eine passende sortierFunktion
 	 * definiert, die dann für die Sortierung mit "sort" genutzt wird.
 	 */
 	sortiereAdressenListe(liste, sortierung) {
-		// *** (3) ***
+		
+		if(sortierung === "Ort"){
+			if (liste !== undefined) {
+				liste.sort((a, b) =>{
+					if ( a.ort < b.ort){
+						return 1;
+					} else if ( a.ort > b.ort) {
+						return -1;
+					} else {
+						return 0;   
+					}
+				});
+			}
+		}else if(sortierung === "PLZ"){
+			if (liste !== undefined) {
+				liste.sort((a, b) =>{
+					if ( a._plz < b._plz){
+						return 1;
+					} else if ( a._plz > b._plz) {
+						return -1;
+					} else {
+						return 0;   
+					}
+				});
+			}
+		}else{
+			if (liste !== undefined) {
+			liste.sort((a, b) =>{
+				if ( a.name < b.name){
+					return 1;
+				} else if ( a.name > b.name) {
+					return -1;
+				} else {
+					return 0;   
+				}
+			});
+		}
+		}
+
+		// *** (3) ***/
 	}
 
 	/*
@@ -137,9 +185,17 @@ class AdressenDAO {
 	 * Es wird nur "logisch" gelöscht, indem die id auf den Wert -1 gesetzt wird.
 	 */
 	loescheAdresse(id) {
-
 		id = -1;
-		aktualisiereAdresse(......);
+		/*var row = document.getElementById(id);
+		var table = row.parentNode;
+		while( table && table.tagName != 'TABLE')
+			table = table.parentNode;
+		if(!table)
+			return;
+		table.loescheAdresse(row.rowIndex);
+		
+		*/
+		
 		// *** (4) ***
 	}
 
