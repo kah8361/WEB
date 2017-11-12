@@ -186,7 +186,7 @@ class AdressenDAO {
 	 */
 	loescheAdresse(id) {
 		if (this.findeAdresseZuId(id) !== "undefined") {
-			this.findeAdresseZuId(id).id = -1;
+			this.findeAdresseZuId(id).id = -1; 
 			this.speichern();
 		}
 		

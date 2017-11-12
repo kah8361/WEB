@@ -37,7 +37,7 @@ function bearbeiteAdresse(button) {
 		url += "&strasse=" + row.cells[5].innerHTML;
 	    window.open(encodeURI(url));
  	} catch (error) {
- 		console.log(error);
+ 		alert(error);
  	}
 }
 
@@ -160,7 +160,7 @@ function speichereAdresse() {
     	}    	
     	window.close();
     } catch (errorMsg) {
-        console.log(errorMsg);
+        alert(errorMsg);
     }
 }
 
