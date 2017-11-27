@@ -26,8 +26,8 @@ export class HomepageComponent implements OnInit {
         // Componenten-Daten initialisieren
 
         /* a) bitte Code hier einfügen... */
-        //this.birthdateAsString = "24.12.2003";
-        this.me = new Person("Kathi", "777", "Bart Simpson", "bart.jpeg", "24.12.2003", "Hollywood", "Sohn");
+        this.me = this.speicherService.ladePerson();
+        this.speicherService.speicherePerson(this.me);        
         this.steckBriefGesperrt = true;
 
     }
@@ -72,6 +72,7 @@ export class HomepageComponent implements OnInit {
 
         if(!this.steckBriefGesperrt){
             this.birthdateAsString = this.me.birthdate;
+            this.speicherService.speicherePerson(this.me);
             this.steckBriefGesperrt = true;
         }else{
             this.steckBriefGesperrt = false;
