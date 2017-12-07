@@ -1,0 +1,14 @@
+body {
+    background-color: rgb(236, 162, 162);
+}
+
+.loginDlgButton.control-label {
+    width: 100px;
+}
+
+.incenter{
+    margin-left: auto;
+    margin-right: auto;
+    width: 30em;
+
+}

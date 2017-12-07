@@ -1,0 +1,69 @@
+body {
+    background-color: rgb(236, 162, 162);
+}
+
+.content{
+    border: 5px solid black;
+    background-color: black;
+    border-radius: 5px;
+    width: 50em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tab-content{
+    border: solid black;
+    height: 350px;
+    margin: 5px 5px 5px;
+    padding: 10px 10px 10px 10px;
+    background-color: white;
+}
+
+.tab{
+    display: inline-block;
+    margin-right: 10px;
+    background-color: blue;
+    color: white;
+}
+
+.img{
+    float:left;
+}
+
+.form-horizontal{
+    align-items: center;
+}
+
+.input-field{
+    float: right;
+}
+
+.loginHeader {
+    background-color: lightgrey;
+}
+
+.loginFooter {
+    color: red;
+}
+
+.steckbriefBild {
+    height: 240px;
+    width: 210px;
+}
+
+
+
+.steckbriefPicture {
+    float: left;
+}
+
+.steckbriefSpacer {
+    float: left;
+    width: 50px;
+}
+
+.steckbriefDaten {
+    float: left;
+}
+
+
