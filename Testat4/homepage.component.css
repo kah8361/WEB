@@ -34,9 +34,6 @@ body {
     align-items: center;
 }
 
-.input-field{
-    float: right;
-}
 
 .loginHeader {
     background-color: lightgrey;
