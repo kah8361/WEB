@@ -12,9 +12,8 @@ body {
 }
 
 .tab-content{
-    border: solid black;
     height: 350px;
-    margin: 5px 5px 5px;
+    margin: 0px 5px;
     padding: 10px 10px 10px 10px;
     background-color: white;
 }
@@ -24,6 +23,7 @@ body {
     margin-right: 10px;
     background-color: blue;
     color: white;
+    border: none;
 }
 
 .img{
@@ -32,6 +32,8 @@ body {
 
 .form-horizontal{
     align-items: center;
+    display: flex;
+    justify-content: center;
 }
 
 
@@ -63,4 +65,8 @@ body {
     float: left;
 }
 
-
+.form-group{
+    display: flex;
+    flex-direction: column;
+    
+}

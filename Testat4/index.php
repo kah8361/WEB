@@ -1,6 +1,11 @@
 <?php
 // Start the session
 session_start();
+if( !isset($_SESSION["name"]) || empty( $_SESSION["name"])){
+    $_SESSION["name"] = "Bart";
+    $_SESSION["ort"] = "Hollywood";
+    $_SESSION["date"] = "?.?.1985";
+}
 ?>
 
 <!DOCTYPE html>
@@ -8,60 +13,50 @@ session_start();
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
-        crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous"> -->
     <link rel="stylesheet" href="homepage.component.css">
 </head>
 
 <body>
 
-    <?php
-        $_SESSION["name"] = $name;
-    ?>
-    
     <form>
         <div class="container">
-                     <?php echo '<h2>' . "Favorite color is " . $name . "</h2>"; ?>
+            <?php echo '<h2>' . "Willkommen auf der Homepage von " . $_SESSION["name"] . "!</h2>"; ?>
 
             <div class="content">
-                    
-                        <button class="active tab">Das bin ich</button>
-                        <button class="active tab">Meine Vergangenheit</button>
-                        <button class="active tab">Was ich mag</button>
-                
+            
+                <button class="active tab">Das bin ich</button>
+                <button class="active tab">Meine Vergangenheit</button>
+                <button class="active tab">Was ich mag</button>
+        
                 <div class="tab-content">
                     <div class="tab-pane active">
                         <h3>Mein Steckbrief:</h3>
-                        <div>
-                            <img class= "img" alt="Fehler beim Laden des Bildes. Bitte gib einen gültigen Pfad ein!" src="bart.jpeg">
+                        <div class= "img">
+                            <img alt="Fehler beim Laden des Bildes. Bitte gib einen gültigen Pfad ein!" src="bart.jpeg">
                         </div>
                         <div class="form-horizontal">
-                            <form  role="form" >
 
-                                <div class="form-group">
-                                    <label for="name">Name:</label>
-                                    <?php
-                                    ob_start();
-                                    ?>
-                                    <label>Kathi</label>
-                                    <?php
-                                    $name = ob_get_clean();
-                                    ?>
-                                </div>
-                                <div class="form-group">
-                                    <label for="birthdate">Geburtsdatum:</label>
-                                    
-                                    <label for="birthdate" name="date">Datum</label>
+                            <div class="form-group">
+                                <div>
+                                    <span>Name:</span>
+                               
+                                    <span><?php echo $_SESSION["name"] ?></span>
                                     
                                 </div>
-                                <div class="form-group">
-                                    <label for="birthplace">Ort:</label>
+                                <div>
+                                    <span>Geburtsdatum:</span>
                                     
-                                    <label for="place" name="place">Ort</label>
-                                    
+                                    <span><?php echo $_SESSION["date"] ?></span>
                                 </div>
+                                <div>
+                                    <span>Ort:</span>
+                                    
+                                    <span><?php echo $_SESSION["ort"] ?></span>
+                                </div>
+                            </div>
 
-                            </form>
                         </div>
 
                     </div>
