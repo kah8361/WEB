@@ -33,24 +33,21 @@ if(isset($_POST["password"])){
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header loginHeader">
-                <?php echo '<h2 class="modal-title incenter">' . "Login zum Bearbeiten der Daten von " . $_SESSION["name"] . "!</h2>"; ?>
+                <?php echo '<h2 class="header incenter">' . "Login zum Bearbeiten der Daten von " . $_SESSION["name"] . "!</h2>"; ?>
             </div>
             <div class="modal-body">
                 <form action="Login.php" method="post" class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label class="control-label col-sm-4" for="password">Passwort:</label>
-                        <div class="col-sm-8">
-                            <input id="password" type="password" class="form-control" name="password">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-8">
-                            <button class="btn btn-primary loginDlgButton" name="submitButton">login</button>
-                        </div>
+                        <label class="control" for="password">Passwort:</label>
+                        
+                        <input id="password" type="password" class="control" name="password">
+                    
+                        <button class="control" name="submitButton">login</button>
+                        
                     </div>
                 </form>
             </div>
-            <div class="modal-footer loginFooter">
+            <div class="modal-body errormsg">
                 <?php echo $error ?><!-- Fehlermeldung -->
 
             </div>

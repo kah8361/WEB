@@ -1,5 +1,7 @@
 body {
-    background-color: rgb(236, 162, 162);
+    background-color: rgb(247, 222, 222);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
 }
 
 .loginDlgButton.control-label {
@@ -11,4 +13,31 @@ body {
     margin-right: auto;
     width: 30em;
 
+}
+
+.header {
+    color: grey;
+}
+
+.modal-body{
+    position: relative;
+    left: 35em;
+}
+
+.form-horizontal{
+    display:flex;
+    flex-direction: row;
+}
+
+.btn{
+    margin: 7px 0px;
+}
+
+.label{
+    position: relative;
+    left: 10em;
+}
+
+.errormsg{
+    color: red;
 }

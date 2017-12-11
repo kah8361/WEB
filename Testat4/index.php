@@ -15,6 +15,8 @@ if( !isset($_SESSION["name"]) || empty( $_SESSION["name"])){
     <meta charset="utf-8">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
         crossorigin="anonymous"> -->
+
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="homepage.component.css">
 </head>
 
@@ -22,13 +24,13 @@ if( !isset($_SESSION["name"]) || empty( $_SESSION["name"])){
 
     <form>
         <div class="container">
-            <?php echo '<h2>' . "Willkommen auf der Homepage von " . $_SESSION["name"] . "!</h2>"; ?>
+            <?php echo '<h2 class="incenter header">' . "Willkommen auf der Homepage von " . $_SESSION["name"] . "!</h2>"; ?>
 
             <div class="content">
             
                 <button class="active tab">Das bin ich</button>
-                <button class="active tab">Meine Vergangenheit</button>
-                <button class="active tab">Was ich mag</button>
+                <button class="tab">Meine Vergangenheit</button>
+                <button class="tab">Was ich mag</button>
         
                 <div class="tab-content">
                     <div class="tab-pane active">
@@ -42,18 +44,18 @@ if( !isset($_SESSION["name"]) || empty( $_SESSION["name"])){
                                 <div>
                                     <span>Name:</span>
                                
-                                    <span><?php echo $_SESSION["name"] ?></span>
+                                    <span  class="label"><?php echo $_SESSION["name"] ?></span>
                                     
                                 </div>
                                 <div>
                                     <span>Geburtsdatum:</span>
                                     
-                                    <span><?php echo $_SESSION["date"] ?></span>
+                                    <span class="label"><?php echo $_SESSION["date"] ?></span>
                                 </div>
                                 <div>
                                     <span>Ort:</span>
                                     
-                                    <span><?php echo $_SESSION["ort"] ?></span>
+                                    <span class="label"><?php echo $_SESSION["ort"] ?></span>
                                 </div>
                             </div>
 
@@ -67,7 +69,7 @@ if( !isset($_SESSION["name"]) || empty( $_SESSION["name"])){
             <!-- content -->
 
             
-                <button class="btn btn-primary btn-xs" formaction="Login.php">
+                <button class="btn" formaction="Login.php">
                     Angaben ändern
                 </button>
             
