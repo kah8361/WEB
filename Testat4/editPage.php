@@ -30,16 +30,22 @@ if(isset($_POST["name"])){
             <div class="modal-header loginHeader incenter">
             <h1 class="header">Daten bearbeiten</h1>
             </div>
-
+            <br>
             <div>
-                <label >Name</label>
-                <input class="label" type="text" name="name"><br>
-                <label >Geburtsdatum</label>
-                <input class="label" type="text" name="date"><br>
-                <label >Geburtsort</label>
-                <input class="label" type="text" name="place"><br>
-
+                <label>Name</label>
+                <input class="label" type="text" name="name">
             </div>
+            <br>
+            <div>
+                <label>Geburtsdatum</label>
+                <input class="label" type="text" name="date">
+            </div>
+            <br>
+            <div>
+                <label>Geburtsort</label>
+                <input class="label" type="text" name="place">
+            </div>
+            <br>
 
             <div class="incenter">
             <button name="save" class="btn">speichern</button>

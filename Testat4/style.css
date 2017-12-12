@@ -34,10 +34,13 @@ body {
 }
 
 .label{
-    position: relative;
-    left: 10em;
+float: right;
 }
 
 .errormsg{
     color: red;
+}
+
+.span{
+    margin: 100px 100px 100px 100px;
 }

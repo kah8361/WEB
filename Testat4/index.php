@@ -42,18 +42,18 @@ if( !isset($_SESSION["name"]) || empty( $_SESSION["name"])){
 
                             <div class="form-group">
                                 <div>
-                                    <span>Name:</span>
+                                    <span class="span">Name:</span>
                                
                                     <span  class="label"><?php echo $_SESSION["name"] ?></span>
                                     
                                 </div>
                                 <div>
-                                    <span>Geburtsdatum:</span>
+                                    <span class="span">Geburtsdatum:</span>
                                     
                                     <span class="label"><?php echo $_SESSION["date"] ?></span>
                                 </div>
                                 <div>
-                                    <span>Ort:</span>
+                                    <span class="span">Ort:</span>
                                     
                                     <span class="label"><?php echo $_SESSION["ort"] ?></span>
                                 </div>
