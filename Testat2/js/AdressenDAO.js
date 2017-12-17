@@ -185,9 +185,8 @@ class AdressenDAO {
 	 * Es wird nur "logisch" gelöscht, indem die id auf den Wert -1 gesetzt wird.
 	 */
 	loescheAdresse(id) {
-		this.id = -1;
-		if (this.findeAdresseZuId(this.id) !== "undefined") {
-			this._adressenArray[this.id] = this.findeAdresseZuId(this.id);
+		if (this.findeAdresseZuId(id) !== "undefined") {
+			this.findeAdresseZuId(id).id = -1; 
 			this.speichern();
 		}
 		

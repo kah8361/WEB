@@ -58,7 +58,6 @@ class AdresseDTO  {
 	pruefe() {
 		
 			var input;
-			try {
 				console.log("prüfe");
 
 				input = document.getElementById("nameID").value;
@@ -82,16 +81,11 @@ class AdresseDTO  {
 					throw("Please enter a street!");
 				}
 
-				validateEmail(this._email);
+				this.validateEmail(this._email);
 				
 				if(this._plz < 1){
 					throw("Your PLZ is incorrect!");
 				}
-
-			} catch (error) {
-				console.log(error);
-			}
-		
 	
 }
 
