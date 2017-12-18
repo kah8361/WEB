@@ -8,7 +8,7 @@ import { Person } from '../models/Person';
 export class SpeicherService {
     // Achtung: '/rest' ist wichtig für die Umleitung an den Apache-Server!
     // der Rest des Pfades kann variieren...
-    private baseURL = 'http://task-5-server.app/';
+    private baseURL = '/rest/WebTestat5/homepageServer/';
 
     public constructor(private http: Http) {
     }
